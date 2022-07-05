@@ -1,0 +1,9 @@
+
+
+
+logging:
+  file: ./logs/gestion-authenticacion.log
+  level:
+    com.wspereira.udemy.microservice.oauthservice: DEBUG
+    org.springframewor.jdbc.core.JdbcTemplate: DEBUG
+    org.springframewor.jdbc.core.StatementCreatorUtils: TRACE
