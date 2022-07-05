@@ -68,7 +68,7 @@ public class AuthenticationSuccesErrorHandler implements AuthenticationEventPubl
                 findByUsername.setEnabled(false);
             }
             userService.update(findByUsername, findByUsername.getId());
-            
+           
         } catch (FeignException e) {
             log.error("Usuario No existe {}", exception.getMessage());
 

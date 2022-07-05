@@ -5,6 +5,7 @@
  */
 package com.wspereira.udemy.microservice.oauthservice.service;
 
+import com.wspereira.udemy.microservice.oauthservice.advice.UserException;
 import com.wspereira.udemy.microservice.oauthservice.clients.UsuarioFeignClient;
 import com.wspereira.udemy.microservice.oauthservice.model.dto.UserDe;
 import feign.FeignException;
@@ -39,7 +40,7 @@ public class UserService implements IUserService, UserDetailsService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException ,UserException{
         try {
             UserDe usuario = client.findByUsername(username);
              
@@ -49,12 +50,12 @@ public class UserService implements IUserService, UserDetailsService {
 
                 log.debug("Usuario o Password incorrecto para {}", username, password);
 
-                throw new UsernameNotFoundException("Error en el login, No existe el usuario '" + username + "'en el sistema o la contraseña es incorrecta");
+                throw new UserException("Error en el login, No existe el usuario '" + username + "'en el sistema o la contraseña es incorrecta");
             }
             if(!usuario.getEnabled()){ 
                 log.debug("Usuario o Password incorrecto para {}", username, password);
 
-                throw new UsernameNotFoundException("Error en el login, el usuario '" + username + "' se encuentra deshabilitado");
+                throw new UserException("Error en el login, el usuario '" + username + "' se encuentra deshabilitado");
             }
             List<GrantedAuthority> authorities = Arrays.asList("USER")
                     .stream()
