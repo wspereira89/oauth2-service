@@ -1,0 +1,6 @@
+spring.config.use-legacy-processing: true
+#archivo para darle nome a la aplicaci\u00f2n. este nombre servira para recconocerlo en eureka
+spring.application.name: oauth2-service
+spring.profiles.active: docker
+spring.cloud.config.uri: http://config-server:8200
+management.endpoints.web.exposure.include: "*"
