@@ -7,13 +7,11 @@ package com.wspereira.udemy.microservice.oauthservice.clients;
 
 import com.wspereira.udemy.microservice.oauthservice.ForexClientConfig;
 import com.wspereira.udemy.microservice.oauthservice.model.dto.UserDe;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -23,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface UsuarioFeignClient {
 
     @GetMapping("/user/{username}")
-    public UserDe findByUsername(@RequestParam(name = "username") String username);
+    public UserDe findByUsername(@PathVariable(name = "username") String username);
 
-    @PatchMapping("/user/{id}/reintento/{intento}")
+    @PutMapping("/user/{id}/reintento/{intento}")
     public UserDe updateReintento(@PathVariable(name = "id") Long id, @PathVariable(name = "intento") int intento);
 
     @PutMapping("/user/{id}")

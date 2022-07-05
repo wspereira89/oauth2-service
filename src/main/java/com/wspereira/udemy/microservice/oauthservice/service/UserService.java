@@ -51,7 +51,12 @@ public class UserService implements IUserService, UserDetailsService {
 
                 throw new UsernameNotFoundException("Error en el login, No existe el usuario '" + username + "'en el sistema o la contraseña es incorrecta");
             }
-            List<GrantedAuthority> authorities = Arrays.asList("a", "b")
+            if(!usuario.getEnabled()){ 
+                log.debug("Usuario o Password incorrecto para {}", username, password);
+
+                throw new UsernameNotFoundException("Error en el login, el usuario '" + username + "' se encuentra deshabilitado");
+            }
+            List<GrantedAuthority> authorities = Arrays.asList("USER")
                     .stream()
                     .map(role -> new SimpleGrantedAuthority(role))
                     .collect(Collectors.toList());

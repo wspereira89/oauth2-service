@@ -8,8 +8,10 @@ package com.wspereira.udemy.microservice.oauthservice.advice;
 import feign.FeignException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -63,5 +65,13 @@ public class AdvaiceController extends ResponseEntityExceptionHandler{
         body.put("message", ex.getMessage());
 
         return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
+    }
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Object>  handleAuthenticationException(AuthenticationException ex, HttpServletResponse response){
+         Map<String, Object> body = new LinkedHashMap<>();
+        
+        body.put("message", ex.getMessage());
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+         return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
     }
 }
